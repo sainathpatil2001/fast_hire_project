@@ -27,14 +27,19 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'accounts.CustomUser'
+
 
 # Application definition
 
 INSTALLED_APPS = [
-    'fast_hire',
+    'applicant',
     'hr',
+    'accounts',
     'rest_framework',
+    'rest_framework_simplejwt',
     'rest_framework.authtoken',
+    'drf_yasg',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,6 +47,32 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+}
+
+# Email settings for password reset
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+EMAIL_HOST_USER = 'patilsainath517@gmail.com'
+EMAIL_HOST_PASSWORD = 'ovpjpfxhnwdssbus'  # 16-digit app password from Google
+
+DEFAULT_FROM_EMAIL = 'patilsainath517@gmail.com'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
